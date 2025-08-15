@@ -1,28 +1,29 @@
 # 🚀 ClaudeSquad
 
-> Complete multi-agent system for Claude Code with 77 specialized agents, dynamic module agents, and **cross-domain communication via FLAGS**. Transform Claude into an intelligent project orchestrator that delegates tasks directly to specialized agents with persistent memory and automatic coordination.
+> Complete multi-agent system for Claude Code with 86+ specialized agents (13 complete, 73+ placeholders), dynamic module agents, **Git workflow automation**, and **cross-domain communication via FLAGS**. Transform Claude into an intelligent project orchestrator that delegates tasks directly to specialized agents with persistent memory and automatic coordination.
 
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Compatible-blue)](https://www.anthropic.com/claude)
-[![Agents](https://img.shields.io/badge/Agents-77-green)](./.claude/agents)
+[![Agents](https://img.shields.io/badge/Agents-86+-green)](./.claude/agents)
+[![Complete](https://img.shields.io/badge/Complete-13-yellow)](./.claude/agents/README.md)
 [![Memory](https://img.shields.io/badge/Memory-Persistent-red)](./.claude/memory)
 [![Setup](https://img.shields.io/badge/Setup-Automated-orange)](./.claude/commands/setup.md)
-[![Version](https://img.shields.io/badge/Version-2.0.0-purple)](./MEJORAS-INVESTIGACION/ROADMAP-COMPLETO.md)
+[![Version](https://img.shields.io/badge/Version-2.1.0-purple)](./CHANGELOG.md)
 
 ## 🎯 What is ClaudeSquad?
 
-ClaudeSquad transforms Claude Code from a single AI assistant into a complete development team. Claude becomes the orchestrator, intelligently delegating to 77 specialized agents AND dynamically creating project-specific module agents, each an expert in their domain.
+ClaudeSquad transforms Claude Code from a single AI assistant into a complete development team. Claude becomes the orchestrator, intelligently delegating to 86+ specialized agents (13 complete, 73+ placeholders) AND dynamically creating project-specific module agents, each an expert in their domain.
 
 ### 🏗️ System Architecture
 
 ```
 Claude (Main Conversation) = DIRECT ORCHESTRATOR
     │
-    ├── 77 Global Specialists (~/.claude/agents/)
-    │   ├── setup-context, setup-codebase, setup-infrastructure
-    │   ├── agent-creator (creates dynamic agents)
-    │   ├── laravel-engineer, react-engineer, postgres-engineer
-    │   ├── docker-engineer, security-auditor, test-automation
-    │   └── [70+ more specialists...]
+    ├── 86+ Global Specialists (~/.claude/agents/)
+    │   ├── ✅ Complete: engineer-laravel, context-manager, agent-creator
+    │   ├── ✅ Complete: specialist-git, documentation-changelog  
+    │   ├── ✅ Complete: coordinators (backend, frontend, database, etc.)
+    │   ├── 📝 Placeholders: 73+ domain specialists (react, vue, postgres, etc.)
+    │   └── 🚀 Git Workflow: /commit, /pr, /issue, /docs commands
     │
     └── Dynamic Module Agents (.claude/agents/ - per project)
         ├── api-agent (knows your API implementation)
@@ -33,7 +34,8 @@ Claude (Main Conversation) = DIRECT ORCHESTRATOR
 **Key Innovation:**
 
 - **Direct delegation** - No coordinators, Claude delegates directly
-- **Dynamic module agents** - Created by agent-creator for your specific project
+- **Git workflow automation** - Professional `/commit`, `/pr`, `/issue`, `/docs` commands
+- **Dynamic module agents** - Created by agent-creator for your specific project  
 - **Cross-domain FLAGS** - Agents communicate via pending.json for coordination
 
 ## ✨ Core Features
@@ -49,6 +51,31 @@ claude /setup
 **For NEW projects:** Interactive conversation gathering 14 areas of requirements
 **For EXISTING projects:** Automatic detection and configuration
 
+### 🚀 Professional Git Workflow Commands
+
+Complete Git automation with multi-agent analysis:
+
+```bash
+# Intelligent commit with linting and analysis  
+claude /commit
+
+# Automated pull request creation
+claude /pr  
+
+# Structured issue creation with templates
+claude /issue
+
+# Documentation management
+claude /docs
+```
+
+**Features:**
+- Conventional commits with 20+ standardized types
+- Multi-agent code analysis before commits
+- Automated PR creation with GitHub CLI
+- Issue templates with proper categorization
+- Security scanning and linting integration
+
 ### 📊 Comprehensive Project Analysis
 
 Four specialized agents analyze your project:
@@ -57,6 +84,25 @@ Four specialized agents analyze your project:
 - `setup-codebase` - Code structure, modules, patterns, quality
 - `setup-infrastructure` - Deployment, databases, CI/CD, external services
 - `setup-environment` - Tools, versions, system capabilities
+
+### 🔊 TTS Integration & Voice Notifications (NEW!)
+
+**Intelligent Text-to-Speech system** with multi-provider support and Spanish voice configuration:
+
+```bash
+# Configure in .env
+OPENAI_API_KEY=your_key_here
+ENGINEER_NAME=YourName
+```
+
+**Features:**
+- **OpenAI TTS** with Nova voice (high quality, natural Spanish)
+- **Fallback to pyttsx3** with Helena voice (offline Spanish)
+- **Smart notifications** when Claude completes tasks
+- **Personalized messages** with your name (30% of the time)
+- **LLM-generated completion messages** in Spanish
+
+**Based on:** [claude-code-hooks-mastery](https://github.com/disler/claude-code-hooks-mastery) by @disler
 
 ### 🧠 Dual Memory Systems
 
@@ -154,33 +200,40 @@ Flow:
 
 ### Optional: MCP Servers for Enhanced Features
 
-ClaudeSquad works out-of-the-box, but installing MCP servers adds powerful capabilities:
+ClaudeSquad works out-of-the-box, but MCP servers add powerful capabilities.
 
+**Currently Configured Servers:**
+- **Memory** - Persistent session context across conversations
+- **Git** - Advanced Git operations and workflow automation  
+- **Fetch** - Web content fetching and API integration
+- **Time** - Timezone operations and scheduling
+- **Everything** - Comprehensive testing and demonstration server
+- **Context7** - Real-time documentation and library reference
+
+**Optional Installation:**
 ```bash
-# Memory Server - For persistent session context
+# Install additional MCP servers as needed
 claude mcp add-npm @modelcontextprotocol/server-memory
-
-# Context7 - For real-time documentation
-claude mcp add-npm @context7/mcp-server
-
-# Git Server - For advanced Git operations
 claude mcp add-npm @modelcontextprotocol/server-git
-
-# Additional servers (optional)
-claude mcp add-npm @modelcontextprotocol/server-fetch  # Web fetching
-claude mcp add-npm @modelcontextprotocol/server-time   # Time operations
+claude mcp add-npm @modelcontextprotocol/server-fetch
+claude mcp add-npm @modelcontextprotocol/server-time
+claude mcp add-npm @context7/mcp-server
 ```
 
 ### Installation
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/ClaudeSquad.git
+git clone https://github.com/unmasSk/ClaudeSquad.git
 cd ClaudeSquad
 
 # 2. Copy to global Claude directory (Windows)
 New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude" | Out-Null
 Copy-Item ".\.claude\*" "$env:USERPROFILE\.claude\" -Recurse -Force
+
+# 3. Configure TTS (optional but recommended)
+cp .env.sample .env
+# Edit .env and add your OpenAI API key for voice notifications
 
 # 2. Copy to global Claude directory (Mac/Linux)
 mkdir -p ~/.claude
@@ -224,26 +277,33 @@ claude /setup
 # → Solution: 500ms → 15ms (33x improvement)
 ```
 
-## 📦 Available Agents (77 Total)
+## 📦 Available Agents (86+ Total, 13 Complete)
 
-### 🔧 Setup & Creation Agents (4)
+### 🔧 Setup & Creation Agents (5)
 
-- `setup-context` - Analyzes project purpose and architecture
-- `setup-codebase` - Analyzes code structure and patterns
-- `setup-infrastructure` - Analyzes deployment and services
-- `setup-environment` - Analyzes tools and system capabilities
-- `agent-creator` - Creates dynamic agents for project modules
+- ✅ `setup-context` - Analyzes project purpose and architecture
+- ✅ `setup-codebase` - Analyzes code structure and patterns  
+- ✅ `setup-infrastructure` - Analyzes deployment and services
+- ✅ `setup-environment` - Analyzes tools and system capabilities
+- ✅ `agent-creator` - Creates dynamic agents for project modules
 
-### 🎯 Specialized Engineers (73)
+### 🎯 Specialized Engineers (81+)
 
-**Backend (7):** laravel, fastapi, nodejs, graphql engineers
-**Frontend (6):** react, vue, angular, nextjs, ui-ux engineers
-**Database (8):** postgres, mysql, redis, sqlite, postgis engineers
-**DevOps (9):** docker, git, logging, observability engineers
-**Security (8):** security-auditor, compliance, gdpr engineers
-**Testing (3):** test-automation, e2e, performance engineers
-**Analysis (3):** discovery, quality, architecture engineers
-**And 21 more specialists...**
+**Completed (8):**
+- ✅ `engineer-laravel` - Laravel 11+ expert with production standards
+- ✅ `context-manager` - Project memory and session coordination
+- ✅ `specialist-git` - Professional Git workflow automation
+- ✅ `documentation-changelog` - Version management and documentation
+- ✅ All coordinator agents (backend, frontend, database, devops, etc.)
+
+**Placeholders (73+):**
+- 📝 **Backend:** fastapi, nodejs, graphql, python, java engineers  
+- 📝 **Frontend:** react, vue, angular, nextjs, ui-ux engineers
+- 📝 **Database:** postgres, mysql, redis, sqlite, postgis engineers
+- 📝 **DevOps:** docker, kubernetes, logging, observability engineers
+- 📝 **Security:** security-auditor, compliance, gdpr engineers
+- 📝 **Testing:** test-automation, e2e, performance engineers
+- 📝 **Analysis:** discovery, quality, architecture engineers
 
 **+ Dynamic Module Agents:** Created automatically for your specific project modules
 
@@ -257,45 +317,40 @@ claude /setup
 - Identifies missing tools
 - Provides installation commands
 
-### Phase 2: Environment Detection
-
-- Detects OS, shell, and available commands
-- Writes .claude/memory/environment.json
-- Ensures cross-platform compatibility
-
-### Phase 3: Memory Server Project Context
+### Phase 2: Memory Server Project Context
 
 - Creates PROJECTNAME-INIT-CONTEXT automatically
 - Enables persistence across sessions
 - Prevents cross-project contamination
 
-### Phase 4: Parallel Project Analysis
+### Phase 3: Parallel Project Analysis
 
 - Real parallel analysis by 4 setup agents
-- Environment, codebase, infrastructure, context
+- Codebase, infrastructure, context analysis
 
-### Phase 5: Language Configuration
+### Phase 4: Language Configuration
 
 - User interaction language preferences
 - Documentation and code comment languages
 
-### Phase 6: CLAUDE.md Generation
+### Phase 5: CLAUDE.md Generation
 
 - Custom CLAUDE.md with FLAGS protocol
 - Project-specific agent recommendations
+- Git workflow command integration
 
-### Phase 7: Dynamic Agent Creation
+### Phase 6: Dynamic Agent Creation
 
 - Agent-creator analyzes modules
 - Creates project-specific agents in parallel
 - Each agent gets complete module knowledge
 
-### Phase 8: FLAGS System Setup
+### Phase 7: FLAGS System Setup
 
 - Creates .claude/memory/flags/ structure
 - Initializes pending.json and processed.json
 
-### Phase 9: System Ready
+### Phase 8: System Ready
 
 - All agents available for direct invocation
 - Cross-domain communication configured
@@ -352,44 +407,55 @@ Claude adapts to your preferences:
 - [JSON Memory System](./.claude/docs/memory-system-real.md) - Local agent memory architecture
 - [MCP Memory Server](./.claude/docs/memory-server-usage-guide.md) - Global persistent knowledge graph
 - [Setup Command](./.claude/commands/setup.md) - Complete setup documentation
-- [All 77 Agents](./.claude/agents/) - Complete agent catalog
+- [All 86+ Agents](./.claude/agents/) - Agent catalog (13 complete, 73+ placeholders)
 - [Context7 Usage](./.claude/docs/context7-usage-guide.md) - Real-time documentation access
 
 ## 🚧 Current Status
 
 ```
-[████████████████████████░░░░] 85% Complete
+[██████████░░░░░░░░░░░░░░░░░░] 35% Complete
 
 ✅ Architecture Design: 100%
-✅ File Structure: 100%
-✅ Setup Command: 100% (6 phases implemented)
+✅ File Structure: 100%  
+✅ Setup Command: 100% (8 phases implemented)
 ✅ FLAGS System: 100% (fully implemented)
-✅ Memory System: 100% (JSON-based agent memory)
+✅ Git Workflow: 100% (/commit, /pr, /issue, /docs)
+✅ Memory System: 100% (dual JSON + MCP Memory Server)
 ✅ Agent Templates: 100% (dynamic agent creation)
-✅ 77 Agent Definitions: 100% (all agents implemented)
-⏳ Testing: 0%
+✅ Core Agents: 15% (13 of 86+ agents complete)
+⏳ Agent Development: 15% (73+ placeholders need implementation)
+⏳ Testing: 5% (basic validation only)
 ⏳ Advanced Features: 30% (agent-health, prepare-context specs)
 ```
 
 ## 🎯 Roadmap
 
-- [x] Complete agent system (77 agents implemented)
-- [x] FLAGS system for cross-domain coordination
+**Completed ✅**
+- [x] Complete agent architecture (86+ agents defined)
+- [x] FLAGS system for cross-domain coordination  
 - [x] Dynamic agent creation with agent-creator
-- [ ] Implement agent-health command (monitoring & upgrades)
-- [ ] Implement prepare-context command (context preparation)
+- [x] Git workflow automation (/commit, /pr, /issue, /docs)
+- [x] Dual memory system (JSON + MCP Memory Server)
+
+**In Progress 🚧**  
+- [ ] Agent development: 73+ placeholders need full implementation
 - [ ] Testing and validation framework
+- [ ] Advanced command implementations (agent-health, prepare-context)
+
+**Future 🔮**
 - [ ] Performance metrics dashboard
 - [ ] VS Code extension
+- [ ] AI-powered agent optimization
 
 ## 🤝 Contributing
 
-This project is production-ready for basic usage. Key areas for contribution:
+This project has a solid foundation with core features working. Key areas for contribution:
 
-- Testing and validation framework
-- Advanced command implementations (agent-health, prepare-context)
-- Performance optimization
-- Additional language-specific templates
+- **Agent Development:** Complete the 73+ placeholder agents using engineer-laravel as the gold standard
+- **Testing Framework:** Comprehensive testing and validation system
+- **Advanced Commands:** Implement agent-health and prepare-context commands
+- **Performance:** Optimization and monitoring improvements
+- **Templates:** Additional language-specific agent templates
 
 ## 📜 License
 
@@ -411,4 +477,4 @@ MIT License - Free for commercial and personal use
 
 **Transform your Claude Code into a complete development team today!** 🚀
 
-_Ready for production use: 77 agents, FLAGS system, dynamic agent creation, and persistent memory all implemented._
+_Solid foundation ready: 86+ agent architecture, Git workflow automation, FLAGS system, dynamic agent creation, and dual memory system all working. 13 agents complete, 73+ need development._
