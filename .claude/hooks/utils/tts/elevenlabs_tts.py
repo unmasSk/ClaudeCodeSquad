@@ -48,29 +48,42 @@ def main():
         # Initialize client
         elevenlabs = ElevenLabs(api_key=api_key)
         
-        print("🎙️  ElevenLabs Turbo v2.5 TTS")
-        print("=" * 40)
+        print("ElevenLabs Turbo v2.5 TTS - Leonidas")
+        print("=" * 50)
         
         # Get text from command line argument or use default
         if len(sys.argv) > 1:
             text = " ".join(sys.argv[1:])  # Join all arguments as text
         else:
-            text = "The first move is what sets everything in motion."
+            text = "Hola, Claude ha completado la tarea."
         
-        print(f"🎯 Text: {text}")
-        print("🔊 Generating and playing...")
+        print(f"Texto: {text}")
+        print("Generando y reproduciendo...")
         
         try:
             # Generate and play audio directly
             audio = elevenlabs.text_to_speech.convert(
                 text=text,
-                voice_id="WejK3H1m7MI9CHnIjW9K",  # Specified voice
+                voice_id="YKrm0N1EAM9Bw27j8kuD",  # Leonidas - Epic warrior voice
                 model_id="eleven_turbo_v2_5",
                 output_format="mp3_44100_128",
             )
             
-            play(audio)
-            print("✅ Playback complete!")
+            # Convert generator to bytes
+            audio_bytes = b"".join(audio)
+            
+            # Save audio to file
+            audio_file = "temp_tts_audio.mp3"
+            with open(audio_file, "wb") as f:
+                f.write(audio_bytes)
+            print(f"Audio guardado como: {audio_file}")
+            
+            # Try to play if ffmpeg is available
+            try:
+                play(audio_bytes)
+                print("Reproduccion completada!")
+            except:
+                print("Para reproducir automaticamente, instala ffmpeg")
             
         except Exception as e:
             print(f"❌ Error: {e}")

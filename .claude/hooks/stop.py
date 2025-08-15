@@ -114,6 +114,62 @@ def get_llm_completion_message():
     messages = get_completion_messages()
     return random.choice(messages)
 
+def print_completion_line():
+    """Print a visual completion line to the terminal."""
+    try:
+        # Get terminal width, default to 80 if not available
+        try:
+            import shutil
+            terminal_width = shutil.get_terminal_size().columns
+        except:
+            terminal_width = 80
+        
+        # Ensure minimum width and cap maximum
+        terminal_width = max(40, min(terminal_width, 120))
+        
+        # Create a fancy completion line with double lines
+        line_char = "="
+        edge_char = "#"
+        middle_text = " CLAUDE COMPLETADO "
+        
+        # Calculate padding
+        text_length = len(middle_text)
+        if text_length >= terminal_width - 4:
+            # If text is too long, use simpler format
+            print("\n" + "=" * terminal_width)
+            print("CLAUDE COMPLETADO".center(terminal_width))
+            print("=" * terminal_width + "\n")
+        else:
+            # Calculate side lengths
+            remaining = terminal_width - text_length - 2  # -2 for edge chars
+            left_side = remaining // 2
+            right_side = remaining - left_side
+            
+            # Create the fancy line
+            completion_line = (
+                edge_char + 
+                line_char * left_side + 
+                middle_text + 
+                line_char * right_side + 
+                edge_char
+            )
+            
+            print("\n" + completion_line + "\n")
+        
+        # Force flush output
+        sys.stdout.flush()
+        
+    except Exception:
+        # Fallback to simple line if anything fails
+        try:
+            print("\n" + "=" * 60)
+            print("CLAUDE COMPLETADO".center(60))
+            print("=" * 60 + "\n")
+            sys.stdout.flush()
+        except:
+            pass  # Ultimate fallback - do nothing
+
+
 def announce_completion():
     """Announce completion using the best available TTS service."""
     try:
@@ -198,6 +254,9 @@ def main():
                         json.dump(chat_data, f, indent=2)
                 except Exception:
                     pass  # Fail silently
+
+        # Print visual completion line to terminal
+        print_completion_line()
 
         # Announce completion via TTS
         announce_completion()
