@@ -15,6 +15,7 @@
 ## 🇪🇸 Current Configuration (Spanish)
 
 The system is currently configured for **Spanish** with:
+
 - **Primary**: OpenAI TTS with Nova voice
 - **Fallback**: pyttsx3 with Helena voice (Windows Spanish)
 - **Messages**: Generated in Spanish via LLM
@@ -22,18 +23,21 @@ The system is currently configured for **Spanish** with:
 ## 🔊 Available TTS Providers
 
 ### 1. OpenAI TTS (Recommended)
+
 - **Pros**: High quality, natural sounding
 - **Cons**: Requires API key, costs per character
 - **Languages**: 50+ languages (with American accent)
 - **Voices**: alloy, echo, fable, onyx, nova, shimmer
 
 ### 2. pyttsx3 (Offline Fallback)
+
 - **Pros**: Free, offline, no API needed
 - **Cons**: Robotic sounding
 - **Languages**: Depends on OS installed voices
 - **Voices**: System dependent
 
 ### 3. ElevenLabs (Not configured)
+
 - **Pros**: Best quality, native accents
 - **Cons**: Expensive, requires API key
 - **Languages**: 29 languages with native voices
@@ -47,7 +51,7 @@ Edit `.claude/hooks/notification.py`:
 ```python
 # Line 65-67 - Change from Spanish to English
 notification_message = f"{engineer_name}, your agent needs your input"
-# Instead of: f"{engineer_name}, tu agente necesita tu atención"
+# Instead of: f"{engineer_name}, Claude necesita tu atencion"
 ```
 
 ### Step 2: Update Stop Hook Messages
@@ -77,14 +81,14 @@ Edit `.claude/hooks/utils/llm/oai.py`:
 # Line 58-81 - Change prompt to English
 if engineer_name:
     name_instruction = f"Sometimes (about 30% of the time) include the engineer's name '{engineer_name}' in a natural way."
-    examples = f"""Examples of the style: 
+    examples = f"""Examples of the style:
 - Standard: "Work complete!", "All done!", "Task finished!", "Ready for your next move!"
 - Personalized: "{engineer_name}, all set!", "Ready for you, {engineer_name}!", "Complete, {engineer_name}!", "{engineer_name}, we're done!" """
 else:
     name_instruction = ""
     examples = """Examples of the style: "Work complete!", "All done!", "Task finished!", "Ready for your next move!" """
 
-prompt = f"""Generate a short, friendly completion message for when an AI coding assistant finishes a task. 
+prompt = f"""Generate a short, friendly completion message for when an AI coding assistant finishes a task.
 
 Requirements:
 - Keep it under 10 words
@@ -158,14 +162,14 @@ prompt = f"""Genera un messaggio breve e amichevole in ITALIANO..."""
 
 ### OpenAI Voices Performance by Language
 
-| Voice    | English | Spanish | French | German | Italian |
-|----------|---------|---------|--------|--------|---------|
-| alloy    | ⭐⭐⭐⭐⭐ | ⭐⭐⭐   | ⭐⭐⭐  | ⭐⭐⭐  | ⭐⭐⭐   |
-| echo     | ⭐⭐⭐⭐  | ⭐⭐⭐   | ⭐⭐⭐  | ⭐⭐⭐⭐ | ⭐⭐⭐   |
-| fable    | ⭐⭐⭐⭐  | ⭐⭐     | ⭐⭐⭐  | ⭐⭐⭐  | ⭐⭐⭐   |
-| onyx     | ⭐⭐⭐⭐⭐ | ⭐⭐⭐   | ⭐⭐⭐⭐ | ⭐⭐⭐  | ⭐⭐⭐   |
-| nova     | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐  | ⭐⭐⭐⭐ | ⭐⭐⭐  | ⭐⭐⭐⭐  |
-| shimmer  | ⭐⭐⭐⭐  | ⭐⭐⭐   | ⭐⭐⭐⭐ | ⭐⭐⭐  | ⭐⭐⭐   |
+| Voice   | English    | Spanish  | French   | German   | Italian  |
+| ------- | ---------- | -------- | -------- | -------- | -------- |
+| alloy   | ⭐⭐⭐⭐⭐ | ⭐⭐⭐   | ⭐⭐⭐   | ⭐⭐⭐   | ⭐⭐⭐   |
+| echo    | ⭐⭐⭐⭐   | ⭐⭐⭐   | ⭐⭐⭐   | ⭐⭐⭐⭐ | ⭐⭐⭐   |
+| fable   | ⭐⭐⭐⭐   | ⭐⭐     | ⭐⭐⭐   | ⭐⭐⭐   | ⭐⭐⭐   |
+| onyx    | ⭐⭐⭐⭐⭐ | ⭐⭐⭐   | ⭐⭐⭐⭐ | ⭐⭐⭐   | ⭐⭐⭐   |
+| nova    | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐   | ⭐⭐⭐⭐ |
+| shimmer | ⭐⭐⭐⭐   | ⭐⭐⭐   | ⭐⭐⭐⭐ | ⭐⭐⭐   | ⭐⭐⭐   |
 
 ### pyttsx3 System Voices
 
@@ -176,6 +180,7 @@ uv run .claude/hooks/utils/tts/list_voices.py
 ```
 
 Common voices by OS:
+
 - **Windows**: David (EN-US), Zira (EN-US), Helena (ES-ES), Hortense (FR-FR), Hedda (DE-DE)
 - **macOS**: Alex (EN-US), Victoria (EN-US), Monica (ES-ES), Amelie (FR-FR), Anna (DE-DE)
 - **Linux**: Varies by installed espeak/festival voices
@@ -212,21 +217,27 @@ uv run .claude/hooks/utils/llm/oai.py --completion
 ## 🔧 Troubleshooting
 
 ### Issue: Interference/Static in Audio
+
 **Solution**: Already fixed by using pygame instead of LocalAudioPlayer
 
 ### Issue: Wrong Language Speaking
+
 **Solution**: Check all 3 locations - notification.py, stop.py, oai.py
 
 ### Issue: Accent Problems
+
 **Solution**: OpenAI voices have American accent. Consider ElevenLabs for native accents
 
 ### Issue: No Audio Playing
+
 **Solutions**:
+
 1. Check .env file has correct API key
 2. Verify with: `echo $OPENAI_API_KEY` (bash) or `echo %OPENAI_API_KEY%` (cmd)
 3. Test fallback: `uv run .claude/hooks/utils/tts/pyttsx3_tts.py "test"`
 
 ### Issue: Windows Encoding Errors
+
 **Solution**: Remove emojis from print statements (already done)
 
 ## 📚 References
@@ -239,15 +250,15 @@ uv run .claude/hooks/utils/llm/oai.py --completion
 
 ```bash
 # For English speakers
-sed -i 's/tu agente necesita tu atención/your agent needs your input/g' .claude/hooks/notification.py
+sed -i 's/Claude necesita tu atencion/your agent needs your input/g' .claude/hooks/notification.py
 
-# For French speakers  
-sed -i 's/tu agente necesita tu atención/votre agent a besoin de votre attention/g' .claude/hooks/notification.py
+# For French speakers
+sed -i 's/Claude necesita tu atencion/votre agent a besoin de votre attention/g' .claude/hooks/notification.py
 
 # For German speakers
-sed -i 's/tu agente necesita tu atención/Ihr Agent benötigt Ihre Aufmerksamkeit/g' .claude/hooks/notification.py
+sed -i 's/Claude necesita tu atencion/Ihr Agent benötigt Ihre Aufmerksamkeit/g' .claude/hooks/notification.py
 ```
 
 ---
 
-*Note: Remember to test after making changes to ensure proper functionality.*
+_Note: Remember to test after making changes to ensure proper functionality._

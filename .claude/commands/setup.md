@@ -1,8 +1,11 @@
-# 🚀 /setup COMMAND – HYBRID OFFICIAL DOCUMENTATION
+---
+command: setup
+description: 🚀 Setup command for ClaudeSquad
+---
 
 ## ⚡ MANDATORY COMMAND FLOW
 
-This hybrid version merges the **technical depth and safeguards** of the original specification with the **clarity and structure** of the newer documentation, while retaining all *immutable rules* and best practices from Claude Code.
+This hybrid version merges the **technical depth and safeguards** of the original specification with the **clarity and structure** of the newer documentation, while retaining all _immutable rules_ and best practices from Claude Code.
 
 ---
 
@@ -40,7 +43,6 @@ If missing:
 
 ---
 
-
 ### 2️⃣ **PHASE 2: MEMORY SERVER PROJECT CONTEXT**
 
 Automatically create project-specific context in Memory Server for persistence across sessions.
@@ -48,18 +50,18 @@ Automatically create project-specific context in Memory Server for persistence a
 ```yaml
 EXECUTION:
   # PSEUDOCODE - adapt to your shell (examples below)
-  
+
   # Get project name from current directory
   PROJECT_NAME=$(basename "$(pwd)")           # Bash/Zsh
   CONTEXT_NAME="${PROJECT_NAME}-INIT-CONTEXT" # Bash/Zsh
-  
+
   # PowerShell equivalent:
   # $PROJECT_NAME = Split-Path -Leaf (Get-Location)
   # $CONTEXT_NAME = "$PROJECT_NAME-INIT-CONTEXT"
-  
+
   # Try to load global user context
   GLOBAL_CONTEXT=$(mcp__server-memory__search_nodes("GLOBAL-USER-CONTEXT"))
-  
+
   # Create or update project-specific context
   mcp__server-memory__create_entities([{
     "name": "${CONTEXT_NAME}",
@@ -75,7 +77,7 @@ EXECUTION:
       "NEXT_STEP: Parallel agent analysis in Phase 3"
     ]
   }])
-  
+
   # Create relation to global context if it exists
   # Bash/Zsh:
   if [ "$GLOBAL_CONTEXT" != "empty" ]; then
@@ -85,7 +87,7 @@ EXECUTION:
       "relationType": "has_project"
     }])
   fi
-  
+
   # PowerShell equivalent:
   # if ($GLOBAL_CONTEXT -ne "empty") {
   #   mcp__server-memory__create_relations([{
@@ -101,7 +103,7 @@ Benefits:
   - Automatic project name detection
   - No user intervention required
   - Projects remain completely separate
-  
+
 Examples:
   - ClaudeSquad/ → CLAUDESQUAD-INIT-CONTEXT
   - my-app/ → MY-APP-INIT-CONTEXT
@@ -109,6 +111,7 @@ Examples:
 ```
 
 **Why this phase:**
+
 - Ensures each project has its own Memory Server context
 - Prevents mixing data between different projects
 - Enables persistence of project-specific information
@@ -134,12 +137,12 @@ INVOCATION:
 
 **Agents and Purpose:**
 
-| Agent               | Purpose |
-|---------------------|---------|
-| setup-context       | Project purpose, architecture, decisions |
-| setup-codebase      | Code structure, modules, patterns, quality |
-| setup-infrastructure| Deployment, databases, CI/CD, external services |
-| setup-environment   | Tools, versions, system capabilities |
+| Agent                | Purpose                                         |
+| -------------------- | ----------------------------------------------- |
+| setup-context        | Project purpose, architecture, decisions        |
+| setup-codebase       | Code structure, modules, patterns, quality      |
+| setup-infrastructure | Deployment, databases, CI/CD, external services |
+| setup-environment    | Tools, versions, system capabilities            |
 
 ✅ **Always** run these in parallel — never sequentially.  
 ⚠️ Limit: 10 simultaneous Task calls.
@@ -149,6 +152,7 @@ INVOCATION:
 ### 4️⃣ **PHASE 4: LANGUAGE CONFIGURATION**
 
 **ALWAYS ASK USER BEFORE CREATING CLAUDE.MD:**
+
 - User interaction language
 - Private documentation language
 - Public documentation language
@@ -165,6 +169,7 @@ CLAUDE:
 ```
 
 `CLAUDE.md` includes:
+
 - Complete tech stack mapping
 - Module dependency structure
 - Detected patterns and conventions
@@ -185,10 +190,12 @@ INVOCATION:
 ```
 
 **Best Practice:**
+
 - Each agent gets **its own context** and memory store.
 - All agents created in a **single message** with multiple Task calls.
 
 Example:
+
 ```bash
 "Create these agents in parallel:
 [Task 1] agent-creator → api-agent (REST/GraphQL)
@@ -249,12 +256,14 @@ CLAUDE:
 ## ❓ **ARCHITECTURE DECISIONS**
 
 ### **OPTION A: Single agent-creator invocation**
+
 ```bash
 agent-creator → create all agents in one task
 # ❌ Problem: Large context size in one window
 ```
 
 ### **OPTION B: Parallel agent creation** ✅ Recommended
+
 ```bash
 # Multiple Task calls in one message
 "Create these agents IN PARALLEL:
@@ -268,108 +277,128 @@ agent-creator → create all agents in one task
 ## FOR NEW/EMPTY PROJECTS
 
 ### **Phase 1: Requirements Interview**
+
 Interactive Q&A covering **14 comprehensive areas**:
 
 **1. Business & Domain**
+
 - What problem does this solve?
 - Who are the users/stakeholders?
 - Business model and revenue streams
 - Success metrics and KPIs
 
 **2. Technical Architecture**
+
 - Technology stack selection and rationale
 - Monolith vs microservices vs serverless
 - API design (REST/GraphQL/gRPC)
 - Real-time requirements
 
 **3. Database & Data**
+
 - Database choice and rationale
 - Data volume expectations
 - ACID vs eventual consistency
 - Data retention and privacy policies
 
 **4. Security & Compliance**
+
 - Authentication method (JWT/OAuth/SAML)
 - Authorization model (RBAC/ABAC)
 - Compliance requirements (GDPR/HIPAA/SOC2)
 - Encryption and secrets management
 
 **5. Infrastructure & Deployment**
+
 - Cloud provider and services
 - Container orchestration strategy
 - Multi-region requirements
 - Disaster recovery planning
 
 **6. CI/CD & DevOps**
+
 - Version control and branching strategy
 - CI/CD platform and pipeline design
 - Environment management
 - Deployment strategies
 
 **7. Monitoring & Observability**
+
 - APM and error tracking tools
 - Log aggregation strategy
 - Alerting rules and SLA definitions
 - Performance monitoring
 
 **8. Testing Strategy**
+
 - Coverage targets and test types
 - Testing framework selection
 - Performance and security testing
 - Quality gates and automation
 
 **9. Documentation & Knowledge**
+
 - API and code documentation standards
 - Architecture diagram requirements
 - Knowledge sharing and onboarding
 - Public vs internal documentation
 
 **10. Accessibility & I18N**
+
 - WCAG compliance requirements
 - Supported languages and locales
 - RTL language support
 - Accessibility testing strategy
 
 **11. Team & Collaboration**
+
 - Team size, roles, and structure
 - Communication and project management tools
 - Code review and development processes
 - Remote/hybrid work considerations
 
 **12. Development Environment**
+
 - Local development setup requirements
 - Docker development environment
 - Development tools and IDE configurations
 - Onboarding time targets
 
 **13. Language & Communication**
+
 - Primary development languages
 - Documentation languages
 - Code comment standards
 - International communication needs
 
 **14. User Experience Level**
+
 - Programming experience assessment
 - Stack familiarity evaluation
 - Learning preferences and mentorship needs
 - Knowledge gaps identification
 
 ### **Phase 2: Architecture Generation**
+
 - Generate scaffolding
 - Create templates (env, CI/CD, Docker)
 - Configure dev environment
 
 ### **Phase 3: Language Configuration**
+
 **ALWAYS ASK USER:**
+
 - User interaction language
 - Private documentation language
 - Public documentation language
 - Comments and docstrings language
 
 ### **Phase 4: CLAUDE.MD Creation**
+
 - Create with language preferences and architecture
 
 ### **Phase 5: Dynamic Agent Creation**
+
 - Create project-specific agents (NOT base specialists - they exist in ~/.claude/agents)
 
 ---
@@ -377,46 +406,53 @@ Interactive Q&A covering **14 comprehensive areas**:
 ## FOR EXISTING PROJECTS
 
 ### Phase 1: Comprehensive Parallel Analysis
+
 - setup-context
 - setup-codebase
 - setup-infrastructure
 - setup-environment
 
 ### Phase 2: Language Configuration
+
 **ALWAYS ASK USER:**
+
 - User interaction language
 - Private documentation language
 - Public documentation language
 - Comments and docstrings language
 
 ### Phase 3: CLAUDE.MD Creation
+
 - Process 4 analyses + language preferences
 
 ### Phase 4: Dynamic Agent Generation
+
 - Detect main modules
 - Create project-specific agents in parallel
 
 ### Phase 5: Configuration Review
+
 - Present system summary, issues, improvements
 
 ---
 
 ## 📊 /init VS /setup COMPARISON
 
-| Feature | Claude Code /init | ClaudeSquad /setup |
-|---------|------------------|-------------------|
-| Analysis | Sequential single scan | 4 specialized agents in parallel |
-| Agent Creation | ❌ None | ✅ Dynamic per module |
-| Memory System | Static CLAUDE.md | Persistent per agent |
-| Customization | Limited | Full specialist ecosystem |
-| Parallel Processing | No | Yes (10 concurrent) |
-| Error Prevention | ❌ None | ✅ Immutable rules |
+| Feature             | Claude Code /init      | ClaudeSquad /setup               |
+| ------------------- | ---------------------- | -------------------------------- |
+| Analysis            | Sequential single scan | 4 specialized agents in parallel |
+| Agent Creation      | ❌ None                | ✅ Dynamic per module            |
+| Memory System       | Static CLAUDE.md       | Persistent per agent             |
+| Customization       | Limited                | Full specialist ecosystem        |
+| Parallel Processing | No                     | Yes (10 concurrent)              |
+| Error Prevention    | ❌ None                | ✅ Immutable rules               |
 
 ---
 
 ## 🚀 **REAL PARALLELISM IN CLAUDE CODE**
 
 ### **CONFIRMED TECHNICAL CAPABILITIES:**
+
 ```yaml
 parallel_tasks:
   limit: "10 simultaneous subagents"
@@ -427,11 +463,12 @@ parallel_tasks:
 ```
 
 ### **CORRECT INVOCATION:**
+
 ```bash
 # ✅ CORRECT - Real parallel:
 "Execute these tasks IN PARALLEL:
 [Task 1] agent-creator → docs-agent
-[Task 2] agent-creator → api-agent  
+[Task 2] agent-creator → api-agent
 [Task 3] agent-creator → frontend-agent
 [Task 4] agent-creator → database-agent"
 
@@ -453,16 +490,16 @@ HOOKS:
   project_shared: .claude/settings.json (committed to repo)
   project_local: .claude/settings.local.json (not committed, personal)
   reason: "Configured in settings files, not separate hooks.json file"
-  
+
 COMMANDS:
   location: .claude/commands/
   reason: "Customized per project"
-  
+
 MEMORY:
   created_by: "agent-creator automatically"
   location: ".claude/memory/agents/[agent-name]/"
   structure: "knowledge.json, patterns.json, index.json, dependencies.json, history.json, context.json"
-  
+
 GLOBAL_VS_LOCAL:
   - .claude/: "In the analyzed project"
   - NOT in ClaudeSquad: "It's template, not destination"

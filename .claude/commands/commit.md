@@ -1,4 +1,7 @@
-# 🔄 /commit - Professional Git Commit Command
+---
+command: commit
+description: 🔄 Professional Git Commit Command
+---
 
 Intelligent commit system with integrated linting, multi-agent analysis, and automatic changelog generation.
 
@@ -17,7 +20,7 @@ Intelligent commit system with integrated linting, multi-agent analysis, and aut
 
 ```yaml
 DETECT_LINTER:
-  JavaScript/TypeScript: 
+  JavaScript/TypeScript:
     - ESLint (.eslintrc*)
     - Biome (biome.json)
   Python:
@@ -40,7 +43,7 @@ EXECUTE:
     * Ask: "Fix automatically? (y/n)" (skip if --no)
     * If yes: run with --fix flag
     * Re-check after fix
-  - If still errors: 
+  - If still errors:
     * Block commit or ask to continue
 ```
 
@@ -52,7 +55,7 @@ GIT_DIFF:
   - Identify affected files and modules
   - Detect module boundaries from paths
   - Group changes by module
-  
+
 AGENT_DETECTION:
   - Check CLAUDE.md for "Dynamic Agents to Create" section
   - Look for pattern: ClaudeSquad-*-specialist or [project]-*-agent
@@ -68,19 +71,19 @@ AGENT_DETECTION:
 ```yaml
 PARALLEL_EXECUTION:
   # Invoke in single message with multiple Tasks
-  
+
   Dynamic Agents (1-N based on affected modules):
     - Analyze code quality
     - Security review
     - Check for secrets/keys
     - Validate business logic
     - Create FLAGS if cross-module impacts detected
-    
+
   specialist-git:
     - Receive diff analysis
     - Determine if split needed
     - Generate commit message(s)
-    
+
   changelog-specialist:
     - Analyze changes for version impact
     - Prepare CHANGELOG entry
@@ -112,7 +115,7 @@ COMMIT_EXECUTION:
     - mcp__server-git__git_commit with message
     - Update CHANGELOG.md if needed
     - Create version tag if release
-    
+
   Multiple Commits (if split detected):
     - Execute commits in sequence
     - Each with its specific message
@@ -125,16 +128,16 @@ COMMIT_EXECUTION:
 FAST_MODE:
   # Skip everything except git operations
   - NO lint check
-  - NO dynamic agents analysis  
+  - NO dynamic agents analysis
   - NO security review
   - NO confirmations
-  
+
   Direct Flow:
     1. Git diff to see changes
     2. Send ONLY to specialist-git
     3. Get commit message
     4. Execute commit immediately
-    
+
   Use Case:
     - When you know code is clean
     - Quick fixes
@@ -148,24 +151,24 @@ FAST_MODE:
 // Pseudo-code for Claude to execute
 
 async function executeCommit(flags) {
-  const fastMode = flags.includes('--no');
-  
+  const fastMode = flags.includes("--no");
+
   // FAST MODE: Solo specialist-git
   if (fastMode) {
-    const diff = await mcp__server-git__git_diff_staged();
-    
+    const diff = (await mcp__server) - git__git_diff_staged();
+
     // Solo invoca specialist-git
     const result = await Task({
       agent: "specialist-git",
       prompt: "Generate commit message for these changes",
-      context: diff
+      context: diff,
     });
-    
+
     // Commit inmediato sin confirmación
-    await mcp__server-git__git_commit(result.message);
+    (await mcp__server) - git__git_commit(result.message);
     return success("Fast commit completed");
   }
-  
+
   // STANDARD MODE: Proceso completo
   // Phase 1: Lint
   const lintResult = await runLintCheck();
@@ -176,35 +179,35 @@ async function executeCommit(flags) {
       return abort("Lint errors must be fixed");
     }
   }
-  
+
   // Phase 2: Git Diff
-  const diff = await mcp__server-git__git_diff_staged();
+  const diff = (await mcp__server) - git__git_diff_staged();
   const modules = detectAffectedModules(diff);
-  
+
   // Phase 3: Parallel Analysis (agentes dinámicos + specialist-git + changelog)
   const tasks = [
-    ...modules.map(m => `@${m}-agent analyze changes`),
+    ...modules.map((m) => `@${m}-agent analyze changes`),
     "@specialist-git generate commit message",
-    "@changelog-specialist prepare changelog"
+    "@changelog-specialist prepare changelog",
   ];
-  
+
   const results = await executeParallelTasks(tasks);
-  
+
   // Phase 4: Review
   const summary = aggregateResults(results);
   showSummary(summary);
-  
-  if (!await confirm("Proceed with commit?")) {
+
+  if (!(await confirm("Proceed with commit?"))) {
     return abort("Commit cancelled");
   }
-  
+
   // Phase 5: Commit
   await executeGitCommit(summary.commitMessage);
-  
+
   if (summary.changelogEntry) {
     await updateChangelog(summary.changelogEntry);
   }
-  
+
   return success("Commit completed");
 }
 ```
@@ -212,6 +215,7 @@ async function executeCommit(flags) {
 ## Examples
 
 ### Standard development flow:
+
 ```bash
 # Make changes to auth module
 /commit
@@ -221,15 +225,16 @@ async function executeCommit(flags) {
   - auth-agent: Security review complete
   - specialist-git: Message generated
   - changelog-specialist: Minor version bump
-  
+
 Commit message:
   feat(auth): add OAuth2 provider support
-  
+
 Proceed? (y/n): y
 ✅ Committed successfully
 ```
 
 ### Fast mode flow:
+
 ```bash
 # Quick documentation change
 /commit --no
@@ -238,6 +243,7 @@ Proceed? (y/n): y
 ```
 
 ### Multiple module changes:
+
 ```bash
 /commit
 # Output:
@@ -246,7 +252,7 @@ specialist-git recommends splitting into 3 commits:
   1. refactor(database): optimize user queries
   2. feat(auth): add role-based permissions
   3. feat(api): expose new permission endpoints
-  
+
 Proceed with split commits? (y/n): y
 ```
 
@@ -269,9 +275,9 @@ WARNINGS:
 
 ```yaml
 Related Commands:
-  /pr:        Create pull request after commits
-  /issue:     Report bugs found during analysis  
-  /docs:      Update documentation if needed
+  /pr: Create pull request after commits
+  /issue: Report bugs found during analysis
+  /docs: Update documentation if needed
   /changelog: Manual changelog management
 ```
 
@@ -284,16 +290,16 @@ commit:
     enabled: true
     autoFix: true
     blockOnError: false
-  
+
   analysis:
     security: true
     quality: true
     complexity: true
-    
+
   changelog:
     enabled: true
     autoVersion: true
-    
+
   confirmations:
     always: true
     skipOnHotfix: true
@@ -314,4 +320,4 @@ commit:
 
 ---
 
-*Command designed for ClaudeSquad professional workflow*
+_Command designed for ClaudeSquad professional workflow_

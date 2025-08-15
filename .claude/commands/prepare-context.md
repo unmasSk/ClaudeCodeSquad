@@ -1,5 +1,6 @@
 ---
-description: Prepares complete context to invoke agents with all necessary information
+command: prepare-context
+description: 🫙 Prepares complete context to invoke agents with all necessary information
 ---
 
 # Prepare Context - Complete Context Preparer
@@ -37,36 +38,37 @@ I provide you the complete prompt:
 @dream-agent, I need [YOUR TASK HERE].
 
 MODULE CONTEXT:
+
 - Path: /src/dream
 - Structure:
-[COMPLETE MODULE TREE - 500+ lines if needed]
+  [COMPLETE MODULE TREE - 500+ lines if needed]
 
 - Main files:
-[LIST OF ALL FILES WITH THEIR PURPOSE]
+  [LIST OF ALL FILES WITH THEIR PURPOSE]
 
 - Detected patterns:
-[ALL PATTERNS IN USE]
+  [ALL PATTERNS IN USE]
 
 - Project conventions:
-[ALL CONVENTIONS]
+  [ALL CONVENTIONS]
 
 - Dependencies:
-[INTERNAL AND EXTERNAL]
+  [INTERNAL AND EXTERNAL]
 
 - Communication:
-[ENDPOINTS, EVENTS, TABLES]
+  [ENDPOINTS, EVENTS, TABLES]
 
 - Configuration:
-[ENVIRONMENT VARIABLES]
+  [ENVIRONMENT VARIABLES]
 
 - Existing tests:
-[TEST STRUCTURE]
+  [TEST STRUCTURE]
 
 - Pending TODOs:
-[TODOS AND FIXMES]
+  [TODOS AND FIXMES]
 
 - Recent changes:
-[LAST 20 COMMITS]
+  [LAST 20 COMMITS]
 
 SPECIFIC TASK:
 [DETAILED DESCRIPTION OF WHAT YOU NEED]
@@ -82,11 +84,12 @@ After the dynamic agent responds, I prepare the prompt for the engineer:
 @engineer-laravel, implement the following:
 
 COMPLETE PROJECT CONTEXT:
+
 - Framework: [DETECTED]
 - Structure: [ALL]
 - NON-NEGOTIABLE Conventions:
   [COMPLETE LIST OF CONVENTIONS]
-  
+
 SPECIFICATIONS FROM dream-agent:
 [EVERYTHING IT RESPONDED]
 
@@ -100,6 +103,7 @@ CRITICAL WARNINGS:
 [EVERYTHING YOU SHOULDN'T DO]
 
 TARGET METRICS:
+
 - Coverage: >80%
 - Complejidad: <10
 - Performance: <100ms
@@ -125,6 +129,7 @@ ACHIEVED METRICS:
 [ALL METRICS]
 
 NECESSARY VALIDATIONS:
+
 - Does it follow module patterns?
 - Does it respect conventions?
 - Does it not duplicate existing code?
@@ -163,4 +168,4 @@ NECESSARY VALIDATIONS:
 
 ---
 
-*This command ensures you ALWAYS give complete context to agents*
+_This command ensures you ALWAYS give complete context to agents_

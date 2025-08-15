@@ -13,7 +13,6 @@ import sys
 import random
 import subprocess
 from pathlib import Path
-from datetime import datetime
 
 try:
     from dotenv import load_dotenv

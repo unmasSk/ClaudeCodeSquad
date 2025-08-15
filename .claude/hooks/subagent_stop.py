@@ -12,7 +12,6 @@ import os
 import sys
 import subprocess
 from pathlib import Path
-from datetime import datetime
 
 try:
     from dotenv import load_dotenv
@@ -58,7 +57,7 @@ def announce_subagent_completion():
             return  # No TTS scripts available
         
         # Use fixed message for subagent completion
-        completion_message = "Subagent Complete"
+        completion_message = "El subagente ha terminado la tarea"
         
         # Call the TTS script with the completion message
         subprocess.run([

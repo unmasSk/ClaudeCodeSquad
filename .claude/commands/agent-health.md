@@ -1,5 +1,6 @@
 ---
-description: Check health status and upgrade needs for dynamic agents
+command: agent-health
+description: ❤️‍🩹 Check health status and upgrade needs for dynamic agents
 ---
 
 # Agent Health Check & Upgrade System

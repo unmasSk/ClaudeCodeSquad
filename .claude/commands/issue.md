@@ -1,4 +1,7 @@
-# 🐛 /issue - GitHub Issues Management Command
+---
+command: issue
+description: 🪲 GitHub Issues Management Command
+---
 
 List existing issues or create new ones with intelligent categorization and error analysis.
 
@@ -17,7 +20,7 @@ List existing issues or create new ones with intelligent categorization and erro
 LIST_ISSUES:
   # Use GitHub CLI to get issues
   gh issue list --state open --limit 30
-  
+
   # Format output
   Display:
     - Issue number
@@ -26,7 +29,7 @@ LIST_ISSUES:
     - Assignee
     - Created date
     - Comments count
-  
+
   # Categorize by type
   Groups:
     🐛 Bugs: label:bug
@@ -48,7 +51,7 @@ ERROR_DETECTION:
     - Stack traces
     - File references
     - Module affected
-    
+
   Context:
     - Recent changes (git log)
     - Related files
@@ -63,12 +66,12 @@ PARALLEL_ANALYSIS:
     - Analyze error type
     - Identify root cause
     - Suggest fixes
-    
+
   affected-module-agent:
     - Module-specific context
     - Impact assessment
     - Related components
-    
+
   security-auditor (if security-related):
     - Security implications
     - Vulnerability assessment
@@ -76,40 +79,40 @@ PARALLEL_ANALYSIS:
 
 ### Phase 3: Issue Creation
 
-```yaml
+````yaml
 ISSUE_STRUCTURE:
   Title:
     - Format: "[Module] Clear error description"
     - Example: "[Auth] OAuth2 token refresh fails with 401"
-    
+
   Body:
     ## Description
     Clear description of the issue
-    
+
     ## Error Details
     ```
     Error message or stack trace
     ```
-    
+
     ## Steps to Reproduce
     1. Step one
     2. Step two
     3. Error occurs
-    
+
     ## Expected Behavior
     What should happen instead
-    
+
     ## Environment
     - OS: Windows/Mac/Linux
     - Node version: x.x.x
     - Project version: x.x.x
-    
+
     ## Possible Solution
     (From agent analysis)
-    
+
     ## Related Issues
     - #123 (if found)
-    
+
   Labels:
     Auto-detect:
       - bug (for errors)
@@ -118,7 +121,7 @@ ISSUE_STRUCTURE:
       - security (if security-related)
       - priority: high/medium/low
       - module: auth/api/database/etc
-```
+````
 
 ### Phase 4: GitHub Operations
 
@@ -126,10 +129,10 @@ ISSUE_STRUCTURE:
 CREATE_ISSUE:
   # Create with gh CLI
   gh issue create \
-    --title "<title>" \
-    --body "<body>" \
-    --label "<labels>"
-    
+  --title "<title>" \
+  --body "<body>" \
+  --label "<labels>"
+
   # Return issue URL for reference
 ```
 
@@ -139,68 +142,68 @@ CREATE_ISSUE:
 async function handleIssue(args) {
   // Mode 1: List issues
   if (!args || args.length === 0) {
-    const issues = await bash('gh issue list --state open --limit 30');
-    
+    const issues = await bash("gh issue list --state open --limit 30");
+
     // Group by type
     const grouped = groupIssuesByLabel(issues);
-    
+
     // Display formatted
     console.log("📋 Open Issues:");
     console.log("🐛 Bugs:", grouped.bugs);
     console.log("✨ Features:", grouped.features);
     console.log("📝 Docs:", grouped.docs);
-    
+
     return success("Issues listed");
   }
-  
+
   // Mode 2: Create issue
-  const description = args.join(' ');
-  
+  const description = args.join(" ");
+
   // Phase 1: Analyze error
   const context = {
     description: description,
-    recentCommits: await mcp__server-git__git_log({max_count: 5}),
-    currentBranch: await getCurrentBranch()
+    recentCommits: (await mcp__server) - git__git_log({ max_count: 5 }),
+    currentBranch: await getCurrentBranch(),
   };
-  
+
   // Phase 2: Agent analysis
   const tasks = [
     "@quality-engineer analyze error",
-    "@security-auditor check security implications"
+    "@security-auditor check security implications",
   ];
-  
+
   // Add module agent if detected
   const module = detectModuleFromError(description);
   if (module) {
     tasks.push(`@${module}-agent provide context`);
   }
-  
+
   const results = await executeParallelTasks(tasks, context);
-  
+
   // Phase 3: Build issue
   const issue = {
     title: generateIssueTitle(description, module),
     body: buildIssueBody(description, results, context),
-    labels: detectLabels(description, results)
+    labels: detectLabels(description, results),
   };
-  
+
   // Show preview
   console.log("📝 Issue Preview:");
   console.log("Title:", issue.title);
   console.log("Labels:", issue.labels);
-  
-  if (!await confirm("Create this issue?")) {
+
+  if (!(await confirm("Create this issue?"))) {
     return abort("Issue creation cancelled");
   }
-  
+
   // Phase 4: Create issue
   const issueUrl = await bash(`
     gh issue create \
       --title "${issue.title}" \
       --body "${issue.body}" \
-      --label "${issue.labels.join(',')}"
+      --label "${issue.labels.join(",")}"
   `);
-  
+
   return success(`Issue created: ${issueUrl}`);
 }
 ```
@@ -208,6 +211,7 @@ async function handleIssue(args) {
 ## Examples
 
 ### List issues:
+
 ```bash
 /issue
 # Output:
@@ -227,6 +231,7 @@ async function handleIssue(args) {
 ```
 
 ### Create bug issue:
+
 ```bash
 /issue "OAuth2 callback returns 404 error after Google login"
 # Output:
@@ -244,6 +249,7 @@ Create issue? (y/n): y
 ```
 
 ### Create with stack trace:
+
 ```bash
 /issue "TypeError: Cannot read property 'id' of undefined at UserService.js:45"
 # Output:
@@ -271,11 +277,11 @@ COMMON_ERRORS:
   Not authenticated:
     - Message: "GitHub CLI not authenticated"
     - Suggest: Run 'gh auth login'
-    
+
   No repository:
     - Message: "Not in a git repository"
     - Suggest: Initialize repo first
-    
+
   Duplicate issue:
     - Check for similar titles
     - Show existing issue if found
@@ -289,17 +295,17 @@ INTELLIGENCE:
   Duplicate Detection:
     - Search existing issues for similar errors
     - Suggest linking instead of creating new
-    
+
   Auto-labeling:
     - Detect module from file paths
     - Detect priority from keywords (critical, urgent, etc.)
     - Detect type (bug, feature, question)
-    
+
   Error Patterns:
     - Recognize common error types
     - Suggest known solutions
     - Link to documentation
-    
+
   FLAGS Integration:
     - If FLAGS exist for the module
     - Include them in issue context
@@ -319,4 +325,4 @@ Workflow:
 
 ---
 
-*Command designed for ClaudeSquad professional workflow*
+_Command designed for ClaudeSquad professional workflow_

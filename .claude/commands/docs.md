@@ -1,4 +1,9 @@
-# 📚 /docs - Module Documentation Update Command
+---
+command: docs
+description: 📖 Module Documentation Update Command
+---
+
+# 📖 Module Documentation Update Command
 
 Professional documentation generation and update command that leverages module-specific agents for accurate, comprehensive documentation.
 
@@ -19,7 +24,7 @@ MODULE_DETECTION:
     - Extract module name from command
     - Validate module exists
     - Identify corresponding agent
-    
+
   Special cases:
     - "all": Process all detected modules
     - No argument: Show available modules
@@ -33,7 +38,7 @@ AGENT_EXECUTION:
     - Invoke [module]-agent with documentation task
     - Agent analyzes current documentation state
     - Generates comprehensive updates
-    
+
   All Modules:
     - Detect all project modules
     - Invoke agents sequentially (not parallel)
@@ -51,21 +56,21 @@ DOCUMENTATION_SCOPE:
       - Configuration options
       - Usage examples
       - API reference
-      
+
     API Documentation:
       - Endpoint descriptions
       - Request/response schemas
       - Authentication details
       - Error codes
       - Rate limiting
-      
+
     Code Documentation:
       - Inline comments (JSDoc/PHPDoc)
       - Function descriptions
       - Parameter explanations
       - Return values
       - Usage examples
-      
+
     Architecture:
       - System design
       - Data flow
@@ -83,7 +88,7 @@ QUALITY_CHECKS:
     - Link validation
     - Format consistency
     - Completeness check
-    
+
   Content:
     - Technical accuracy
     - Clear language
@@ -99,20 +104,22 @@ async function updateDocumentation(moduleName) {
   if (!moduleName) {
     return showAvailableModules();
   }
-  
-  if (moduleName === 'all') {
+
+  if (moduleName === "all") {
     return updateAllModules();
   }
-  
+
   // Validate module exists
   const agentName = `${moduleName}-agent`;
   if (!agentExists(agentName)) {
-    return error(`Module '${moduleName}' not found. Use /docs to see available modules.`);
+    return error(
+      `Module '${moduleName}' not found. Use /docs to see available modules.`
+    );
   }
-  
+
   // Phase 2: Invoke module agent
   console.log(`📚 Updating documentation for ${moduleName} module...`);
-  
+
   const task = {
     agent: agentName,
     prompt: `Update all documentation for the ${moduleName} module following professional standards:
@@ -133,46 +140,46 @@ async function updateDocumentation(moduleName) {
     context: {
       module: moduleName,
       files: await getModuleFiles(moduleName),
-      existing_docs: await getExistingDocs(moduleName)
-    }
+      existing_docs: await getExistingDocs(moduleName),
+    },
   };
-  
+
   const result = await Task(task);
-  
+
   // Phase 3: Report results
   console.log(`✅ Documentation updated for ${moduleName}`);
   console.log(`Files modified:`);
-  result.files_updated.forEach(file => {
+  result.files_updated.forEach((file) => {
     console.log(`  - ${file}`);
   });
-  
+
   return success("Documentation update complete");
 }
 
 async function updateAllModules() {
   const modules = await detectProjectModules();
   console.log(`📚 Updating documentation for ${modules.length} modules...`);
-  
+
   for (const module of modules) {
     console.log(`\n▶ Processing ${module}...`);
     await updateDocumentation(module);
   }
-  
+
   return success("All module documentation updated");
 }
 
 async function showAvailableModules() {
   const modules = await detectProjectModules();
-  
+
   console.log("📚 Available modules for documentation:");
-  modules.forEach(module => {
+  modules.forEach((module) => {
     console.log(`  - ${module}`);
   });
-  
+
   console.log("\nUsage:");
   console.log("  /docs [module]  - Update specific module");
   console.log("  /docs all       - Update all modules");
-  
+
   return success("Module list displayed");
 }
 ```
@@ -180,6 +187,7 @@ async function showAvailableModules() {
 ## Examples
 
 ### Update single module:
+
 ```bash
 /docs auth
 # Output:
@@ -189,7 +197,7 @@ async function showAvailableModules() {
   ✓ Generating API documentation
   ✓ Updating code comments
   ✓ Creating troubleshooting guide
-  
+
 ✅ Documentation updated for auth
 Files modified:
   - modules/auth/README.md
@@ -199,6 +207,7 @@ Files modified:
 ```
 
 ### Update all modules:
+
 ```bash
 /docs all
 # Output:
@@ -223,6 +232,7 @@ Files modified:
 ```
 
 ### Show available modules:
+
 ```bash
 /docs
 # Output:
@@ -265,19 +275,19 @@ quality_standards:
     - All config options explained
     - Common use cases covered
     - Error scenarios documented
-    
+
   clarity:
     - Simple language preferred
     - Technical terms explained
     - Progressive complexity
     - Visual aids where helpful
-    
+
   accuracy:
     - Code examples tested
     - Version-specific notes
     - Dependencies listed
     - Performance implications noted
-    
+
   maintainability:
     - Clear update timestamps
     - Version compatibility notes
@@ -299,6 +309,7 @@ Workflow:
 ## Agent Capabilities Required
 
 Each module agent must have:
+
 - Deep knowledge of its module structure
 - Ability to analyze existing documentation
 - Understanding of documentation best practices
@@ -312,11 +323,11 @@ COMMON_ERRORS:
   Module not found:
     - Show available modules
     - Suggest similar names
-    
+
   No documentation folder:
     - Create structure automatically
     - Follow project conventions
-    
+
   Agent not available:
     - Check if module has dynamic agent
     - Suggest running /setup first
@@ -324,4 +335,4 @@ COMMON_ERRORS:
 
 ---
 
-*Command designed for ClaudeSquad professional documentation workflow*
+_Command designed for ClaudeSquad professional documentation workflow_

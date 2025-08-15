@@ -73,6 +73,20 @@ ClaudeSquad is a comprehensive knowledge base and multi-agent system that transf
 
 ## Common Development Commands
 
+### Task Management (NEW!)
+```bash
+# Advanced todo management with due dates and priorities
+/todo add "Implement new feature" tomorrow
+/todo add "Fix critical bug" high
+/todo complete 1
+/todo list
+/todo past due
+/todo next
+
+# Check persistent todos file
+cat todos.md
+```
+
 ### Python Scripts Development
 ```bash
 # Use uv for Python execution
@@ -110,6 +124,17 @@ claude "Use @ClaudeSquad-agents-specialist to analyze agent structure"
 
 # Check FLAGS
 cat .claude/memory/flags/pending.json
+```
+
+### UI Generation with Magic MCP (NEW!)
+```bash
+# Generate UI components instantly
+"Create a modern dashboard with dark mode"
+"Generate a user profile card with avatar"
+"Build a responsive navigation menu"
+
+# Verify Magic MCP is connected
+/mcp
 ```
 
 ## Key Workflows
